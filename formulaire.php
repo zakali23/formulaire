@@ -23,11 +23,19 @@ session_start();
         </div>
         <div class="col-lg-6">
           <h3 style="color:black;text-align:center;"></br>CONTACT US</h3>
-          <?php if(array_key_exists('success', $_SESSION)):  ?>
-          <div class="alert alert-success">
-          Votre Email à été bien envoyé
-          </div>
-          <?php endif; ?>
+<?php
+if (array_key_exists('errors', $_SESSION)):  ?>
+<div class="alert alert-danger">
+  <?=implode('<br>', $_SESSION['errors']);?>
+</div>
+<?php endif; ?>
+
+<?php if(array_key_exists('success', $_SESSION)):  ?>
+<div class="alert alert-success">
+  votre Message a été envoyé
+</div>
+<?php endif; ?>
+
 
           <form role="form" id="contactForm" method="post" action="form.php">
             <div class="row">
@@ -36,7 +44,7 @@ session_start();
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">F</span>
                   </div>
-                  <input type="text" class="form-control" placeholder="First Name" name="firstNAme" aria-label="FirstName" required="required" oninvalid="this.setCustomValidity('Please Enter your first Name')" oninput="setCustomValidity('')" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" placeholder="First Name" name="firstName" required="required" oninvalid="this.setCustomValidity('Please Enter your first Name')" oninput="setCustomValidity('')" aria-label="FirstName" value="<?= isset($_SESSION['champs']['firstName'])? $_SESSION['champs']['firstName'] : '';?>" aria-describedby="basic-addon1">
                 </div>
               </div>
               <div class="form-group col-sm-6">
@@ -44,7 +52,7 @@ session_start();
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">L</span>
                   </div>
-                  <input type="text" class="form-control" placeholder="LastName" aria-label="LastName" name="lastName"required="required" oninvalid="this.setCustomValidity('Please Enter your Last Name')" oninput="setCustomValidity('')" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" placeholder="LastName" aria-label="LastName" name="lastName" required="required" oninvalid="this.setCustomValidity('Please Enter your Last Name')" oninput="setCustomValidity('')" value="<?= isset($_SESSION['champs']['lastName'])? $_SESSION['champs']['LastName'] : '';?>" aria-describedby="basic-addon1">
                 </div>
               </div>
             </div>
@@ -52,14 +60,14 @@ session_start();
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">T</span>
               </div>
-              <input type="tel" class="form-control" placeholder="Phone" name="tel" aria-label="Phone" required="required" pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$" oninvalid="this.setCustomValidity('Please Enter valid Number')" oninput="setCustomValidity('')" aria-describedby="basic-addon1">
+              <input type="tel" class="form-control" placeholder="Phone" name="tel" required="required" pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$" oninvalid="this.setCustomValidity('Please Enter valid Number')" oninput="setCustomValidity('')" value="<?= isset($_SESSION['champs']['tel'])? $_SESSION['champs']['tel'] : '';?>" aria-label="Phone"  aria-describedby="basic-addon1">
             </div>
             </br>
             <div class="input-group ">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">@</span>
               </div>
-              <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required="required" oninvalid="this.setCustomValidity('Please Enter valid email')" oninput="setCustomValidity('')" aria-describedby="basic-addon1">
+              <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required="required" oninvalid="this.setCustomValidity('Please Enter valid email')" oninput="setCustomValidity('')"    value="<?= isset($_SESSION['champs']['email'])? $_SESSION['champs']['email'] : '';?>" aria-describedby="basic-addon1">
             </div>
             </br>
             <div class="input-group">
@@ -79,7 +87,9 @@ session_start();
                 <div class="input-group-prepend">
                   <span class="input-group-text" >With textarea</span>
                 </div>
-                <textarea class="form-control" aria-label="With textarea" name="textarea" required="required" oninvalid="this.setCustomValidity('Please Enter Your Message')" oninput="setCustomValidity('')" ></textarea>
+                <textarea class="form-control" aria-label="With textarea" name="textarea" required="required" oninvalid="this.setCustomValidity('Please Enter Your Message')" oninput="setCustomValidity('')">
+                  <?= isset($_SESSION['champs']['textarea']) ? $_SESSION['champs']['textarea'] : '';?>
+                </textarea>
               </div>
             </div>
             <button type="submit" name="submit" id="form-submit" class="btn btn-primary">Send</button>
@@ -97,3 +107,8 @@ session_start();
 </body>
 
 </html>
+<?php
+unset($_SESSION['champs']);
+unset($_SESSION['errors']);
+unset($_SESSION['success']);
+ ?>

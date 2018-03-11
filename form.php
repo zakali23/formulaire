@@ -44,7 +44,7 @@ if (!empty($errors)) {
 else {
   $_SESSION['success'] = 1;
   $header="l'expediteur : $email";
-  mail('zakaria.zekraoui@gmail.com', 'Formulaire de contact', $textarea, $header);
+  mail('z@zed.fr', 'Formulaire de contact', $textarea, $header);
 header('location: formulaire.php');
 }
 

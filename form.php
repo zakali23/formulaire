@@ -39,13 +39,13 @@ session_start();
 if (!empty($errors)) {
   $_SESSION['errors'] = $errors;
   $_SESSION['champs'] = $_POST;
-  header('location: tester.php');
+  header('location: index.php');
 }
 else {
   $_SESSION['success'] = 1;
   $header="l'expediteur : $email";
   mail('zakaria.zekraoui@gmail.com', 'Formulaire de contact', $textarea, $header);
-header('location: tester.php');
+header('location: index.php');
 }
 
 

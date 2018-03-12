@@ -24,7 +24,7 @@ if (!array_key_exists('lastName', $_POST) || $lastName == '') {
 if (!array_key_exists('firstName', $_POST) ||  $firstName == '') {
   $errors['firstName']="Please enter your first Name";
 }
-if (!array_key_exists('tel', $_POST) ||  $tel == '') {
+if (!array_key_exists('tel', $_POST) ||  $tel == '' || !preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/", $tel)) {
   $errors['tel']="Please enter your Number phone";
 }
 if (!array_key_exists('email', $_POST) ||  $email == '' || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ){
@@ -44,7 +44,7 @@ if (!empty($errors)) {
 else {
   $_SESSION['success'] = 1;
   $header="l'expediteur : $email";
-  mail('z@zed.fr', 'Formulaire de contact', $textarea, $header);
+  mail('zakaria.zekraoui@gmail.com', 'Formulaire de contact', $textarea, $header);
 header('location: formulaire.php');
 }
 
